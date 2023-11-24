@@ -9,6 +9,18 @@ class DrawImage(Scene):
         img.scale(3)
         self.play(FadeIn(img))
         self.wait(1)
+        ##draw a triangle on the upper left corner of the  image and place text next to it
+        triangle1 = Triangle(color=RED).scale(0.2).shift(RIGHT*4.8+UP*3)
+        triangle1.set_fill(RED, opacity=1)
+        self.play(Create(triangle1), run_time=0.1)
+        text1 = Text("= Adrenaline", font="Serif", color=RED).scale(0.4).shift(RIGHT*6+UP*3.2)
+        self.play(Write(text1))
+        
+        circle1 = Circle(color=GREEN, fill_opacity=0.5).scale(0.2).shift(RIGHT*3.4+UP*2.7)
+        circle1.set_fill(GREEN, opacity=0.5)
+        self.play(Create(circle1), run_time=0.1)
+        text2 = Text("= Monoamine Oxidase", font="Serif", color=GREEN).scale(0.4).shift(RIGHT*5.4+UP*2.7)
+        self.play(Write(text2))
         ##draw 10 red triangles in two columms of 5 on each side of the image and store the trianles in a np array
         triangles = []
         for i in range(5):
@@ -21,6 +33,7 @@ class DrawImage(Scene):
         ##create text on the upper right corener of the screen
         text = Text("During a panic attack feelings of nausea\nare caused by a sudden rush of adrenaline\nto the stomach", font="Serif", color=WHITE).scale(0.4).shift(LEFT*4+UP*3)
         self.play(Write(text))
+        self.wait(1)
         ##move the triangles towards the center of the screen
         self.play(triangles[0].animate.shift(RIGHT*5, UP*1.5),
                   triangles[1].animate.shift(LEFT*3.3, UP*0.5), 
@@ -37,6 +50,7 @@ class DrawImage(Scene):
         
         text = Text("The enzyme Monoamine Oxidase is\ncapable of breaking down adrenaline", font="Serif", color=WHITE).scale(0.4).shift(LEFT*4+UP*3)
         self.play(Write(text))
+        self.wait(1)
         circles = []
         for i in range(5):
             circles.append(Circle(color=GREEN, radius=0.1, fill_opacity=0.5).shift(LEFT*3.5+UP*(i-2)))
@@ -58,7 +72,7 @@ class DrawImage(Scene):
         self.play(Unwrite(text), run_time=0.5)
         text = Text("Our innotavtion, the PanX pill,\nwill deliver the Monoamine Oxidase.\nThen the enzyme in the pill will\nbreakdown the adrenaline in the stomach", font="Serif", color=WHITE).scale(0.4).shift(LEFT*3.8+UP*3)
         self.play(Write(text))
-
+        self.wait(1)
         self.play(circles[0].animate.shift(UP*0.2),
                   circles[1].animate.shift(UP*0.2), 
                   circles[2].animate.shift(UP*0.2), 
@@ -95,4 +109,6 @@ class DrawImage(Scene):
                   Uncreate(circles[7]), 
                   Uncreate(circles[8]), 
                   Uncreate(circles[9]), run_time=0.5)
-        self.wait(5)
+        self.wait(3)
+        self.play(Unwrite(text), Unwrite(text1), Unwrite(text2), Uncreate(triangle1), Uncreate(circle1), FadeOut(img))
+        self.wait(1)
